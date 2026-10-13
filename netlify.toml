@@ -1,0 +1,6 @@
+[build]
+  command = "bun run build"
+  # Nitro's Netlify preset writes static client assets to dist/ (the server
+  # function goes to .netlify/functions-internal). dist/client is only used
+  # by Lovable's sandbox builds.
+  publish = "dist"
