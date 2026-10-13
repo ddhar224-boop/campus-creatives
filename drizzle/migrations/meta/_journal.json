@@ -8,6 +8,13 @@
       "when": 1791909841234,
       "tag": "0000_teammaker_secure_workspace",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791910156291,
+      "tag": "0001_restrict_security_helpers",
+      "breakpoints": true
     }
   ]
 }
