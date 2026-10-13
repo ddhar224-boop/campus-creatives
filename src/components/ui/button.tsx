@@ -9,6 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        campus: "bg-card text-navy hover:bg-secondary shadow-sm",
+        navy: "bg-navy text-navy-foreground hover:bg-navy/90",
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
