@@ -14,16 +14,206 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      academic_options: {
+        Row: {
+          course: string
+          department: string
+          id: string
+        }
+        Insert: {
+          course: string
+          department: string
+          id?: string
+        }
+        Update: {
+          course?: string
+          department?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      confidential_team_rules: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: string
+          members: Json
+          rule_type: string
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          members?: Json
+          rule_type?: string
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          members?: Json
+          rule_type?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          academic_year: string
+          campus: string
+          course: string
+          department: string
+          full_name: string
+          id: string
+          requested_role: string
+          section: string
+          semester: string
+        }
+        Insert: {
+          academic_year?: string
+          campus?: string
+          course?: string
+          department?: string
+          full_name?: string
+          id: string
+          requested_role?: string
+          section?: string
+          semester?: string
+        }
+        Update: {
+          academic_year?: string
+          campus?: string
+          course?: string
+          department?: string
+          full_name?: string
+          id?: string
+          requested_role?: string
+          section?: string
+          semester?: string
+        }
+        Relationships: []
+      }
+      session_access: {
+        Row: {
+          id: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_access_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "team_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_generations: {
+        Row: {
+          created_at: string
+          id: string
+          session_id: string
+          settings: Json
+          teams: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          session_id: string
+          settings?: Json
+          teams: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          session_id?: string
+          settings?: Json
+          teams?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "team_generations_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "team_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      team_sessions: {
+        Row: {
+          academic_details: Json
+          activity_title: string
+          created_at: string
+          id: string
+          owner_id: string
+          settings: Json
+          students: Json
+        }
+        Insert: {
+          academic_details?: Json
+          activity_title: string
+          created_at?: string
+          id?: string
+          owner_id: string
+          settings?: Json
+          students?: Json
+        }
+        Update: {
+          academic_details?: Json
+          activity_title?: string
+          created_at?: string
+          id?: string
+          owner_id?: string
+          settings?: Json
+          students?: Json
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      can_read_session: { Args: { _session: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "teacher" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +340,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "teacher", "admin"],
+    },
   },
 } as const
